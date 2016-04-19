@@ -5,3 +5,5 @@ There are lots of Like button plugins for wordpress, those do amazing things, bu
 
 
 I am working on this project since the beginning of april but I had midterms and other projects, it was hanging on board for the last 2 weeks now I had the time to update.
+
+It is not finished, like statistics page still needs some **development**.
