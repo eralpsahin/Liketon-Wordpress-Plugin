@@ -49,16 +49,39 @@ function liketon_uninstall()
   $sql = "DROP TABLE ". $table_name;
   $wpdb->query($sql);
 }
+function liketon_total_likes()
+{
+	global $wpdb;
+	 $tableName = $wpdb->prefix.'likebutton';
+    $commentT = $wpdb->prefix.'comments';
+     $user_id = get_current_user_id();
+	$posts = $wpdb->get_results("
+                SELECT L.post_id, L.like_date, C.comment_date
+                FROM $tableName L
+                LEFT JOIN (SELECT comment_post_ID, MAX(comment_date) AS comment_date
+                	   FROM $commentT
+                	   WHERE comment_approved=1
+                	   GROUP BY comment_post_ID) C
+                ON C.comment_post_ID = L.post_id
+                WHERE L.user_id = $user_id
+               	ORDER BY C.comment_date DESC
+      ");
+	return count($posts);
+}
+
 function liketon_likes( $atts )
-{ //page numberlari ayni linkin parametrelisini calls queryi parametreye gore 	yaparim shortcode ile yazarim hepsini.
+{
 	
 	global $wpdb;
  	$limit = get_option('liketon_setting');
     $user_id = get_current_user_id();
     $tableName = $wpdb->prefix.'likebutton';
     $commentT = $wpdb->prefix.'comments';
+
    	$page = isset($_GET['page']) ? (int) substr($_GET['page'],1,strlen($_GET['page'])) : 1;
    	$start = ($page > 1) ? ($page * $limit) - $limit : 0 ;
+
+   	$total = liketon_total_likes();
    	$posts = $wpdb->get_results("
                 SELECT L.post_id, L.like_date, C.comment_date
                 FROM $tableName L
@@ -74,7 +97,9 @@ function liketon_likes( $atts )
 
 
     ob_start();
-    echo $start;
+
+    $total = ceil($total/$limit);
+    echo 'total'.$total.'</br>';
     //var_dump($posts);
     echo '</br>';
     //echo count($posts);
@@ -84,8 +109,12 @@ function liketon_likes( $atts )
 
 	foreach ($posts as $likedpost)
     {
-      echo ': <a href="'.get_permalink($likedpost->post_id).'">'.get_the_title($likedpost->post_id).'   '.$likedpost->comment_date.'</a>';
+      echo ': <a href="'.get_permalink($likedpost->post_id).'">'.get_the_title($likedpost->post_id).'   '.$likedpost->comment_date.'</a>'; echo '<a data-id="'.$likedpost->post_id.'" class="dislike-btn" href="#">Dislike</a>';
       echo '</br>';
+    }
+    for($x=1;$x<=$total;$x++)
+    {
+     echo '<a href="?page=p'.$x.'">'.$x.'</a>  ';
     }
 	return ob_get_clean();
 }
