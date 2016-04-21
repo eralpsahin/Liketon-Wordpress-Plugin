@@ -35,7 +35,7 @@ Just drag the "Liketon the Like Button" widget to the desired area.
 By default widget shows most recent 10 likes (ordered by the most recent comments), that can be easily changed in the widgets page.
 
 #### Shortcode
-The Shortcode `[Liketon]` can be used to insert the liketon statistics to anywhere you can use shortcodes.
+The Shortcode `[Liketon]` can be used to insert the liketon statistics to anywhere you can use shortcodes. This creates a statistics page on the inserted page and a pagination for all the likes.
 You can find more on shortcodes here: https://codex.wordpress.org/Shortcode_API
 
 By default the number of likes per page is 10, but on _Admin Menu_ hover _Settings_ and then click _Liketon_, you can change how many likes per page.
