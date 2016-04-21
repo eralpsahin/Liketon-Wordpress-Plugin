@@ -11,9 +11,7 @@ jQuery(document).ready(function($){
 			 	liketon_nonce: liketondata.nonce
 			};
 			$.post(liketondata.ajaxurl,post_data,function(response){
-				if(response == 'disliked') {
-					alert('Dislike completed');
-			 	} else {
+				if(response != 'disliked') {
 			 		alert('Dislike Failed');
 			 	}
 			});
@@ -27,9 +25,7 @@ jQuery(document).ready(function($){
 			 	liketon_nonce: liketondata.nonce
 			};
 			$.post(liketondata.ajaxurl,post_data,function(response){
-				if(response == 'liked') {
-					alert('Like completed');
-			 	} else {
+				if(response != 'liked') {
 			 		alert('Like Failed');
 			 	}
 			});
@@ -39,16 +35,14 @@ jQuery(document).ready(function($){
 	$('.dislike-btn').click(function(e){
 		e.preventDefault();
 		var post_id = $(this).data("id");
-		alert($(this).data("id"));
 		var post_data = {
 			 	action:'dislike_it',
 			 	post_id: post_id,
 			 	liketon_nonce: liketondata.nonce
 			};
-			alert("elma");
 			$.post(liketondata.ajaxurl,post_data,function(response){
 				if(response == 'disliked') {
-					alert('Dislike completed');
+					location.reload()
 			 	} else {
 			 		alert('Dislike Failed');
 			 	}
