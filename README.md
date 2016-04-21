@@ -18,5 +18,18 @@ There are lots of Like button plugins for wordpress, those do amazing things, bu
 [Downlaod the liketon-plugin.zip file from the releases page](https://github.com/eralpsahin/LikeTon/releases)
 
 ##Installation
-Under _Plugins_ admin page, click upload plugin
+Under _Plugins_ admin page click _Add New_ then, click _Upload Plugin_
 ![picture alt](http://wowslider.com/engine/data/upload/2015/02/plugins_upload_plugin.jpg "Upload Plugin")
+
+Browse the previously downloaded liketon-plugin.zip file and click _Install Now_ after successfull installation you can either activate plugin or return to plugins site without activating the liketon.
+
+##Activation and Settings
+You can activate or deactive liketon whenever you would like to from the _Plugins_ page.
+Liketon will create a custom database on the wordpress database when it is activated. After activation all the posts will have like button and evey user can like posts. To like any post one has to be logged in first.
+
+#### Liketon Widget
+
+You can add the widget to the desired widget area from the _Widgets_ page under _Appearance_.
+Just drag the "Liketon the Like Button" widget to the desired area.
+
+By default widget shows most recent 10 likes (ordered by the most recent comments), that can be easily changed in the widgets page.
