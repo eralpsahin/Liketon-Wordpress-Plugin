@@ -71,52 +71,54 @@ function liketon_total_likes()
 
 function liketon_likes( $atts )
 {
-	
-	global $wpdb;
- 	$limit = get_option('liketon_setting');
-    $user_id = get_current_user_id();
-    $tableName = $wpdb->prefix.'likebutton';
-    $commentT = $wpdb->prefix.'comments';
+	if(is_user_logged_in())
+	{
+		global $wpdb;
+	 	$limit = get_option('liketon_setting');
+	    $user_id = get_current_user_id();
+	    $tableName = $wpdb->prefix.'likebutton';
+	    $commentT = $wpdb->prefix.'comments';
 
-   	$page = isset($_GET['page']) ? (int) substr($_GET['page'],1,strlen($_GET['page'])) : 1;
-   	$start = ($page > 1) ? ($page * $limit) - $limit : 0 ;
+	   	$page = isset($_GET['page']) ? (int) substr($_GET['page'],1,strlen($_GET['page'])) : 1;
+	   	$start = ($page > 1) ? ($page * $limit) - $limit : 0 ;
 
-   	$total = liketon_total_likes();
-   	$posts = $wpdb->get_results("
-                SELECT L.post_id, L.like_date, C.comment_date
-                FROM $tableName L
-                LEFT JOIN (SELECT comment_post_ID, MAX(comment_date) AS comment_date
-                	   FROM $commentT
-                	   WHERE comment_approved=1
-                	   GROUP BY comment_post_ID) C
-                ON C.comment_post_ID = L.post_id
-                WHERE L.user_id = $user_id
-               	ORDER BY C.comment_date DESC
-                LIMIT $start ,$limit
-      ");
+	   	$total = liketon_total_likes();
+	   	$posts = $wpdb->get_results("
+	                SELECT L.post_id, L.like_date, C.comment_date
+	                FROM $tableName L
+	                LEFT JOIN (SELECT comment_post_ID, MAX(comment_date) AS comment_date
+	                	   FROM $commentT
+	                	   WHERE comment_approved=1
+	                	   GROUP BY comment_post_ID) C
+	                ON C.comment_post_ID = L.post_id
+	                WHERE L.user_id = $user_id
+	               	ORDER BY C.comment_date DESC
+	                LIMIT $start ,$limit
+	      ");
 
 
-    ob_start();
+	    ob_start();
+		echo 'Total number of likes: '.$total.'</br>';
+		echo $limit.' likes will be shown per page';
+	    $total = ceil($total/$limit);
+	    echo '</br>';
+	    //echo count($posts);
+	    //echo $_SERVER['REQUEST_URI'];
+	    //echo '<a href="url">link text</a>';
 
-    $total = ceil($total/$limit);
-    echo 'total'.$total.'</br>';
-    //var_dump($posts);
-    echo '</br>';
-    //echo count($posts);
-    //echo $_SERVER['REQUEST_URI'];
-    //echo '<a href="url">link text</a>';
-	echo 'Page is this'.$page.'The limit is'.$limit.'</br>';
-
-	foreach ($posts as $likedpost)
-    {
-      echo ': <a href="'.get_permalink($likedpost->post_id).'">'.get_the_title($likedpost->post_id).'   '.$likedpost->comment_date.'</a>'; echo '<a data-id="'.$likedpost->post_id.'" class="dislike-btn" href="#">Dislike</a>';
-      echo '</br>';
-    }
-    for($x=1;$x<=$total;$x++)
-    {
-     echo '<a href="?page=p'.$x.'">'.$x.'</a>  ';
-    }
-	return ob_get_clean();
+		foreach ($posts as $likedpost)
+	    {
+	      echo '<a href="'.get_permalink($likedpost->post_id).'">'.get_the_title($likedpost->post_id).''.$likedpost->comment_date.'</a>';
+	      echo '   <a data-id="'.$likedpost->post_id.'" class="dislike-btn" href="#">Dislike</a>';
+	      echo '</br>';
+	    }
+	    echo '</br></br>';
+	    for($x=1;$x<=$total;$x++)
+	    {
+	     echo '<a href="?page=p'.$x.'">'.$x.'</a>  ';
+	    }
+		return ob_get_clean();
+	}
 }
 
 add_shortcode( 'Liketon', 'liketon_likes' );
