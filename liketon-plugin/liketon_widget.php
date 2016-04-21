@@ -55,7 +55,7 @@ class Liketon_Widget extends WP_Widget
   }
   function widget($args, $instance)
   {
-    echo '<b>Liked Posts\' Titles</b></br></br>';
+    echo '<b>Liked Posts\' Titles</b></br>';
     global $wpdb;
     $user_id = get_current_user_id();
     $tableName = $wpdb->prefix.'likebutton';
@@ -64,12 +64,13 @@ class Liketon_Widget extends WP_Widget
                 FROM $tableName
                 WHERE user_id = $user_id
       ");
+
     usort($posts,array($this,'cmp'));
+
     $lines =10;
     if(!empty($instance[ 'lines' ]) && ($instance['lines']>=1))
     $lines = $instance['lines']; 
     $count=0;
-    echo $lines.' Lines will be shown</br>';
     foreach ($posts as $likedpost)
     {
       $count+=1;
@@ -78,7 +79,6 @@ class Liketon_Widget extends WP_Widget
        if($count==$lines)
         break;
     }
-    echo '--END OF '.$lines.' LIKES--';
   }
  
 }
