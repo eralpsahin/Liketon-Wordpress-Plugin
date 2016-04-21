@@ -16,3 +16,7 @@ There are lots of Like button plugins for wordpress, those do amazing things, bu
 
 ##Download
 [Downlaod the liketon-plugin.zip file from the releases page](https://github.com/eralpsahin/LikeTon/releases)
+
+##Installation
+Under _Plugins_ admin page, click upload plugin
+![picture alt](http://wowslider.com/engine/data/upload/2015/02/plugins_upload_plugin.jpg "Upload Plugin")
