@@ -42,7 +42,7 @@ jQuery(document).ready(function($){
 			};
 			$.post(liketondata.ajaxurl,post_data,function(response){
 				if(response == 'disliked') {
-					location.reload()
+					location.reload();
 			 	} else {
 			 		alert('Dislike Failed');
 			 	}
