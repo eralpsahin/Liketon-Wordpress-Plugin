@@ -41,4 +41,4 @@ You can find more on shortcodes here: https://codex.wordpress.org/Shortcode_API
 By default the number of likes per page is 10, but on _Admin Menu_ hover _Settings_ and then click _Liketon_, you can change how many likes per page.
 
 #### Notes
-This plugin is mostly a tutorial and a resource to get help. You can always contact me via my e-mail: eralpsahin@sabanciuniv.edu
+This plugin is mostly a tutorial and a resource to get help.
